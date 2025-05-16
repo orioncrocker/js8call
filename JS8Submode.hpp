@@ -2,7 +2,7 @@
 #define JS8_SUBMODE_HPP_
 
 #include "JS8.hpp"
-#include <QString>
+#include <string>
 #include <stdexcept>
 
 namespace JS8::Submode
@@ -13,8 +13,8 @@ namespace JS8::Submode
 
   struct error : public std::runtime_error
   {
-    explicit error(QString const & what)
-    : std::runtime_error(what.toStdString())
+    explicit error(std::string const what)
+    : std::runtime_error(what)
     {}
   };
 
@@ -22,7 +22,7 @@ namespace JS8::Submode
   // constant data specific to the submode. Each of those functions
   // will throw if provided with an invalid JS8 submode.
 
-  QString      name(int);
+  std::string  name(int);
   unsigned int bandwidth(int);
   Costas::Type costas(int);
   unsigned int framesPerCycle(int);

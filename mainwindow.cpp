@@ -967,7 +967,7 @@ MainWindow::MainWindow(QString  const & program_info,
         auto items = m_bandActivity.value(selectedOffset);
         if(!items.isEmpty()){
             int submode = items.last().submode;
-            auto speed = JS8::Submode::name(submode);
+            auto speed = QString::fromStdString(JS8::Submode::name(submode));
             if(submode != m_nSubMode){
                 auto qrqAction = menu->addAction(QString("Jump to %1%2 speed").arg(speed.left(1)).arg(speed.mid(1).toLower()));
                 connect(qrqAction, &QAction::triggered, this, [this, submode](){
@@ -1214,7 +1214,7 @@ MainWindow::MainWindow(QString  const & program_info,
             }
 
             int submode = m_callActivity[selectedCall].submode;
-            auto speed  = JS8::Submode::name(submode);
+            auto speed  = QString::fromStdString(JS8::Submode::name(submode));
             if(submode != m_nSubMode){
                 auto qrqAction = menu->addAction(QString("Jump to %1%2 speed").arg(speed.left(1)).arg(speed.mid(1).toLower()));
                 connect(qrqAction, &QAction::triggered, this, [this, submode](){
@@ -7641,26 +7641,26 @@ void MainWindow::updateModeButtonText(){
 
     auto modeText = JS8::Submode::name(m_nSubMode);
     if(multi){
-        modeText += QString("+MULTI");
+        modeText += "+MULTI";
     }
 
     if(autoreply){
         if(m_config.autoreply_confirmation()){
-            modeText += QString("+AUTO+CONF");
+            modeText += "+AUTO+CONF";
         } else {
-            modeText += QString("+AUTO");
+            modeText += "+AUTO";
         }
     }
 
     if(heartbeat){
         if(ack){
-            modeText += QString("+HB+ACK");
+            modeText += "+HB+ACK";
         } else {
-            modeText += QString("+HB");
+            modeText += "+HB";
         }
     }
 
-    ui->modeButton->setText(modeText);
+    ui->modeButton->setText(QString::fromStdString(modeText));
 }
 
 void MainWindow::updateButtonDisplay(){
@@ -9746,7 +9746,7 @@ void MainWindow::displayBandActivity() {
                 tdriftItem->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
                 ui->tableWidgetRXAll->setItem(row, col++, tdriftItem);
 
-                auto name = JS8::Submode::name(submode);
+                auto name = QString::fromStdString(JS8::Submode::name(submode));
                 auto submodeItem = new QTableWidgetItem(name.left(1).replace("H", "N"));
                 submodeItem->setToolTip(name);
                 submodeItem->setData(Qt::UserRole, QVariant(name));
@@ -10095,7 +10095,7 @@ void MainWindow::displayCallActivity() {
                 tdriftItem->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
                 ui->tableWidgetCalls->setItem(row, col++, tdriftItem);
 
-                auto name = JS8::Submode::name(d.submode);
+                auto name = QString::fromStdString(JS8::Submode::name(d.submode));
                 auto modeItem = new QTableWidgetItem(name.left(1).replace("H", "N"));
                 modeItem->setToolTip(name);
                 modeItem->setData(Qt::UserRole, QVariant(name));

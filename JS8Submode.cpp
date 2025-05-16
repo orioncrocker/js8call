@@ -149,7 +149,8 @@ namespace JS8::Submode
         case Varicode::JS8CallUltra:  return Ultra;
         default:
         {
-          throw error {QObject::tr("Invalid JS8 submode %1").arg(submode)};
+          std::string error_msg = "Invalid JS8 submode " + submode;
+          throw error {error_msg};
         }
       }
     }
@@ -165,10 +166,10 @@ namespace JS8::Submode
   // Submode name inquiry function; return a translated value, if there is
   // a translated value, otherwise, the untranslated mode name.
 
-  QString
+  std::string
   name(int const submode)
   {
-    return QObject::tr(data(submode).name());
+    return data(submode).name();
   }
 
   // Basic submode numeric inquiry functions, i.e., parameterized only by
